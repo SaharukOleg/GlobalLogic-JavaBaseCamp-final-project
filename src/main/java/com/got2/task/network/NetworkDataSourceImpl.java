@@ -25,7 +25,7 @@ public class NetworkDataSourceImpl implements NetworkDataSource {
 
     @Override
     public Book getBookById(Integer id) {
-        ResponseEntity<Book> exchange = restTemplate.exchange(BASE_URL + "/houses/" + id, HttpMethod.GET, entity, Book.class);
+        ResponseEntity<Book> exchange = restTemplate.exchange(BASE_URL + "/books/" + id, HttpMethod.GET, entity, Book.class);
         return exchange.getBody();
     }
 
@@ -36,8 +36,19 @@ public class NetworkDataSourceImpl implements NetworkDataSource {
     }
 
     @Override
+    public Characterrr getCharacterByResourcePath(String path) {
+        return restTemplate.exchange(path, HttpMethod.GET, entity, Characterrr.class).getBody();
+    }
+
+    @Override
     public House getHouseById(Integer id) {
         ResponseEntity<House> exchange = restTemplate.exchange(BASE_URL + "/houses/" + id, HttpMethod.GET, entity, House.class);
+        return exchange.getBody();
+    }
+
+    @Override
+    public House getHouseByResourcePath(String path) {
+        ResponseEntity<House> exchange = restTemplate.exchange(path, HttpMethod.GET, entity, House.class);
         return exchange.getBody();
     }
 }

@@ -2,6 +2,7 @@ package com.got2.task.controller;
 
 
 import com.got2.task.entity.Characterrr;
+import com.got2.task.exceptions.NoSuchCharacterException;
 import com.got2.task.service.CharacterService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,12 +12,15 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Set;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+
 @RestController
 @EnableAutoConfiguration
 @RequestMapping("/")
@@ -26,7 +30,6 @@ public class CharacterController {
 
     @Autowired
     CharacterService characterService;
-
 
 
     /**
@@ -58,13 +61,13 @@ public class CharacterController {
 
 
     /**
-     * GET  /character/id : get the "id" character.
+     * GET  /character/id : get the "id" character. імпортуе героя за зовнішньою айпішкою і сейває в БД і повертає вже збереженого в БД героя
      *
      * @return the ResponseEntity with status 200 (OK) and with body , or with status 404 (Not Found)
      */
-    @GetMapping("/{id}")
-    public Characterrr CharacterrrById(@PathVariable Integer id) {
-        return characterService.getCharacterrrById(id);
+    @PostMapping("/outside/{outerId}")
+    public Characterrr importCharacterrrByOuterId(@PathVariable Integer outerId) {
+        return characterService.importCharacterrrByOuterId(outerId);
     }
 
 
@@ -76,12 +79,34 @@ public class CharacterController {
     }
 
 
-
-
+    /**
+     * GET  /character/{id}  витягує героя з БД
+     *
+     * @param id
+     * @return
+     */
     @GetMapping(value = "/character/{id}", produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<Characterrr> getCharacterById(@PathVariable Integer id) {
         log.info("Fetching character with id of " + id);
         return ResponseEntity.ok().body(characterService.getCharacterrrById(id));
+    }
+
+    /**
+     * GET  /character/randomfellow  витягує героя з БД
+     *
+     * @param id
+     * @return
+     */
+    @GetMapping(value = "/character/randomFellow/{id}", produces = APPLICATION_JSON_VALUE)
+    @ExceptionHandler({NoSuchCharacterException.class})
+    public ResponseEntity<Set<Characterrr>> getRandomFellowById(@PathVariable Integer id) {
+        log.info("Fetching character with id of " + id);
+        try {
+            return ResponseEntity.ok().body(characterService.getCharacterFriendsFromSameBook(id));
+        } catch (NoSuchCharacterException exc) {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, exc.getMessage(), exc);
+        }
     }
 
 

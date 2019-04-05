@@ -9,5 +9,9 @@ public interface NetworkDataSource {
 
     Characterrr getCharacterById(Integer id);
 
+    Characterrr getCharacterByResourcePath(String path);
+
     House getHouseById(Integer id);
+
+    House getHouseByResourcePath(String path);
 }

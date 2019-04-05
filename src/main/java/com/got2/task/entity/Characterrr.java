@@ -1,13 +1,14 @@
 package com.got2.task.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
-
 import javax.persistence.*;
 import java.util.List;
 
 @Data
 @Table(name = "Characterrr")
 @Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Characterrr {
 
     @Id

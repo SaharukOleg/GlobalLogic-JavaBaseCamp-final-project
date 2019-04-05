@@ -1,7 +1,6 @@
 package com.got2.task.entity;
 
 import lombok.*;
-
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;

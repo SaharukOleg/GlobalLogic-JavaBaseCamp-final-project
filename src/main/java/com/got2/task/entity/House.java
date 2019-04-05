@@ -1,7 +1,6 @@
 package com.got2.task.entity;
 
 import lombok.*;
-
 import javax.persistence.*;
 import java.util.List;
 
@@ -200,5 +199,27 @@ public class House {
 
     public void setSwornMembers(List<String> swornMembers) {
         this.swornMembers = swornMembers;
+    }
+
+    @Override
+    public String toString() {
+        return "House{" +
+                "id=" + id +
+                ", url='" + url + '\'' +
+                ", name='" + name + '\'' +
+                ", region='" + region + '\'' +
+                ", coatOfArms='" + coatOfArms + '\'' +
+                ", words='" + words + '\'' +
+                ", titles=" + titles +
+                ", seats=" + seats +
+                ", currentLord='" + currentLord + '\'' +
+                ", heir='" + heir + '\'' +
+                ", overlord='" + overlord + '\'' +
+                ", founded='" + founded + '\'' +
+                ", diedOut='" + diedOut + '\'' +
+                ", ancestralWeapons=" + ancestralWeapons +
+                ", cadetBranches=" + cadetBranches +
+                ", swornMembers=" + swornMembers +
+                '}';
     }
 }
