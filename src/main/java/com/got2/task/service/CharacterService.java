@@ -9,13 +9,15 @@ import com.got2.task.repository.CharacterRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
 
 @Service
 @Transactional
@@ -29,12 +31,12 @@ public class CharacterService {
     @Autowired
     NetworkDataSource networkDataSource;
 
-    /**
-     * @return
-     */
-    public List<Characterrr> getAllCharacter() {
-        return characterRepository.findAll();
+
+    public Page<Characterrr> getAllCharacter(Pageable pageable) {
+        return characterRepository.findAll(pageable);
     }
+
+
 
     /**
      * @param characterrr
@@ -58,6 +60,15 @@ public class CharacterService {
 
         return characterRepository.findById(id).get();
     }
+//
+
+//        public Page<Characterrr> getCharacterrrById(Integer id, Pageable pageable) { // протестити коли буде час
+//
+//        log.debug("Request to GetById Character : {}", id);
+//
+//        return characterRepository.findById(id, pageable);
+//    }
+//
 
 
     public Characterrr importCharacterrrByOuterId(Integer outerId) {
@@ -79,6 +90,8 @@ public class CharacterService {
         log.debug("Request to delete Character : {}", id);
         characterRepository.deleteById(id);
     }
+
+
 
     public Set<Characterrr> getCharacterFriendsFromSameBook(Integer characterId) throws NoSuchCharacterException {
         Characterrr requestChar = null;

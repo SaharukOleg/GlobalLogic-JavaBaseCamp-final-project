@@ -3,12 +3,17 @@ package com.got2.task.controller;
 
 import com.got2.task.entity.Characterrr;
 import com.got2.task.exceptions.NoSuchCharacterException;
+import com.got2.task.repository.CharacterRepository;
 import com.got2.task.service.CharacterService;
+import javafx.scene.control.Pagination;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,15 +36,17 @@ public class CharacterController {
     @Autowired
     CharacterService characterService;
 
+    @Autowired
+    CharacterRepository characterRepository;
 
     /**
      * GET /characters - Get all characters
      *
      * @return return all characters
      */
-    @GetMapping(path = "/characters")
-    public List<Characterrr> getAllCharacter() {
-        return characterService.getAllCharacter();
+    @GetMapping("/characters") // if after url use ?page=0&size=2 ,  you can see first two characters
+    public Page<Characterrr> getAllCharacter(Pageable pageable) {
+        return characterService.getAllCharacter(pageable);
     }
 
 
@@ -90,6 +97,17 @@ public class CharacterController {
         log.info("Fetching character with id of " + id);
         return ResponseEntity.ok().body(characterService.getCharacterrrById(id));
     }
+
+
+
+//    @GetMapping(value = "/character/{id}", produces = APPLICATION_JSON_VALUE)
+//    public Page<Characterrr> getCharacterrrById(Integer id, Pageable pageable) {
+//
+//        log.debug("Request to GetById Character : {}", id);
+//
+//        return characterService.getCharacterrrById(id, pageable);
+//    }
+
 
     /**
      * GET  /character/randomfellow  витягує героя з БД
