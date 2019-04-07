@@ -5,7 +5,6 @@ import com.got2.task.entity.Characterrr;
 import com.got2.task.exceptions.NoSuchCharacterException;
 import com.got2.task.repository.CharacterRepository;
 import com.got2.task.service.CharacterService;
-import javafx.scene.control.Pagination;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +12,7 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +20,6 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.List;
 import java.util.Set;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
@@ -73,8 +71,11 @@ public class CharacterController {
      * @return the ResponseEntity with status 200 (OK) and with body , or with status 404 (Not Found)
      */
     @PostMapping("/outside/{outerId}")
-    public Characterrr importCharacterrrByOuterId(@PathVariable Integer outerId) {
-        return characterService.importCharacterrrByOuterId(outerId);
+    @ResponseBody
+    public ResponseEntity<Characterrr> importCharacterrrByOuterId(@PathVariable Integer outerId) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/json; charset=utf-8");
+        return new ResponseEntity<Characterrr>(characterService.importCharacterrrByOuterId(outerId), headers, HttpStatus.OK);
     }
 
 
@@ -98,6 +99,12 @@ public class CharacterController {
         return ResponseEntity.ok().body(characterService.getCharacterrrById(id));
     }
 
+
+    @GetMapping(value = "/character/name", produces = APPLICATION_JSON_VALUE) // перевірити
+    public Characterrr getCharacterByName(@PathVariable String name) {
+        log.info("Fetching character with name of " + name);
+        return characterService.getCharacterByName(name);
+    }
 
 
 //    @GetMapping(value = "/character/{id}", produces = APPLICATION_JSON_VALUE)

@@ -1,10 +1,9 @@
 package com.got2.task.entity;
 
-import lombok.*;
 import javax.persistence.*;
 import java.util.List;
 
-@Data
+
 @Table(name = "House")
 @Entity
 public class House {

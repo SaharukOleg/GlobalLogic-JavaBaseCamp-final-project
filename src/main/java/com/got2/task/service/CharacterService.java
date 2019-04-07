@@ -6,6 +6,7 @@ import com.got2.task.exceptions.NoSuchCharacterException;
 import com.got2.task.network.NetworkDataSource;
 import com.got2.task.repository.CharacterRepository;
 
+import org.aspectj.lang.annotation.Before;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,14 +38,14 @@ public class CharacterService {
     }
 
 
-
-    /**
-     * @param characterrr
-     * @return
-     */
     public Characterrr save(Characterrr characterrr) {
         log.debug("Request to save Character : {}");
         return characterRepository.save(characterrr);
+    }
+
+
+    public Characterrr getCharacterByName(String name) { // не використовується
+        return characterRepository.findCharacterrrByName(name);
     }
 
 
@@ -54,12 +55,12 @@ public class CharacterService {
      * @param id the id of the entity
      * @return the entity
      */
-    public Characterrr getCharacterrrById(Integer id) {
+        public Characterrr getCharacterrrById(Integer id) {
 
-        log.debug("Request to GetById Character : {}", id);
+//            log.debug("Request to GetById Character : {}");  тут падає ексепгин при тесті якшо розкомітити
 
-        return characterRepository.findById(id).get();
-    }
+            return characterRepository.findById(id).get();
+        }
 //
 
 //        public Page<Characterrr> getCharacterrrById(Integer id, Pageable pageable) { // протестити коли буде час
@@ -92,7 +93,6 @@ public class CharacterService {
     }
 
 
-
     public Set<Characterrr> getCharacterFriendsFromSameBook(Integer characterId) throws NoSuchCharacterException {
         Characterrr requestChar = null;
         try {
@@ -113,17 +113,16 @@ public class CharacterService {
                 }
             }
         }
-
         return sameBookCharactersFriends;
     }
 
-    private Integer getIdFromResource(String book) {
+    public Integer getIdFromResource(String book) {
         String strId = book.replace("https://www.anapioficeandfire.com/api/books/", "");
         strId = strId.replace("https://anapioficeandfire.com/api/books/", "");
         return Integer.valueOf(strId);
     }
 
-    private Set<Characterrr> getAllFriendsByAllegiances(List<String> allegiances) {
+    public Set<Characterrr> getAllFriendsByAllegiances(List<String> allegiances) {
         Set<Characterrr> friends = new HashSet<>();
         for (String allegiance : allegiances) {
             House house = networkDataSource.getHouseByResourcePath(allegiance);
