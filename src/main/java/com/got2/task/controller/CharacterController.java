@@ -70,7 +70,7 @@ public class CharacterController {
      *
      * @return the ResponseEntity with status 200 (OK) and with body , or with status 404 (Not Found)
      */
-    @PostMapping("/outside/{outerId}")
+    @PostMapping(value = "/outside/{outerId}", produces = APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity<Characterrr> importCharacterrrByOuterId(@PathVariable Integer outerId) {
         HttpHeaders headers = new HttpHeaders();

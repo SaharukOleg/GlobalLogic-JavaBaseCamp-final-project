@@ -1,7 +1,6 @@
 package com.got2.task;
 
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +12,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.Matchers.iterableWithSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @RunWith(SpringRunner.class)
@@ -24,21 +22,12 @@ public class TaskApplicationTests {
     @Autowired
     private MockMvc mockMvc;
 
-//    @Autowired
-//    private VisitsRepository visitsRepository;
-//
-//    @Before
-//    public void setUp() throws Exception {
-//        visitsRepository.deleteAll();
-//    }
-
     @Test
     public void indexControllerShouldReturnHtmlPage() throws Exception {
         mockMvc.perform(get("/"))
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("Welcome to Spring")));
     }
-
 
 
 

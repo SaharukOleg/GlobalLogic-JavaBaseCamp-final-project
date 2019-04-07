@@ -1,7 +1,6 @@
-package com.got2.task.controller.characterRopositoryTest;
+package com.got2.task.controller.characterUnitTest;
 
 import com.got2.task.TaskApplication;
-import com.got2.task.controller.testData.TestData;
 import com.got2.task.entity.Characterrr;
 import com.got2.task.exceptions.NoSuchCharacterException;
 import com.got2.task.network.NetworkDataSourceImpl;
