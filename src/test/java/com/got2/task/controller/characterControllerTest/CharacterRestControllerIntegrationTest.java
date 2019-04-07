@@ -46,7 +46,6 @@ public class CharacterRestControllerIntegrationTest {
     private CharacterService service;
 
 
-
     @Test
     public void importCharacterFromOutsideTest() throws Exception {
 
@@ -71,7 +70,6 @@ public class CharacterRestControllerIntegrationTest {
 
         characterRepository.deleteAll();
     }
-
 
 
     @Test
