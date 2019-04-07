@@ -55,21 +55,12 @@ public class CharacterService {
      * @param id the id of the entity
      * @return the entity
      */
-        public Characterrr getCharacterrrById(Integer id) {
+    public Characterrr getCharacterrrById(Integer id) {
 
 //            log.debug("Request to GetById Character : {}");  тут падає ексепгин при тесті якшо розкомітити
 
-            return characterRepository.findById(id).get();
-        }
-//
-
-//        public Page<Characterrr> getCharacterrrById(Integer id, Pageable pageable) { // протестити коли буде час
-//
-//        log.debug("Request to GetById Character : {}", id);
-//
-//        return characterRepository.findById(id, pageable);
-//    }
-//
+        return characterRepository.findById(id).get();
+    }
 
 
     public Characterrr importCharacterrrByOuterId(Integer outerId) {
