@@ -27,10 +27,6 @@ public class Characterrr {
     private String mother;
     private String spouse;
     private List<String> allegiances;
-    //    @ManyToMany
-//    @JoinTable(name = "character_has_books",
-//            joinColumns = @JoinColumn(name = "characterrr_id", referencedColumnName = "id", nullable = false),
-//            inverseJoinColumns = @JoinColumn(name = "book_id", referencedColumnName = "id", nullable = false))
     private List<String> books;
     private List<String> povBooks;
     private List<String> tvSeries;

@@ -6,7 +6,6 @@ import com.got2.task.exceptions.NoSuchCharacterException;
 import com.got2.task.network.NetworkDataSource;
 import com.got2.task.repository.CharacterRepository;
 
-import org.aspectj.lang.annotation.Before;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 
@@ -33,7 +33,7 @@ public class CharacterService {
     NetworkDataSource networkDataSource;
 
 
-    public Page<Characterrr> getAllCharacter(Pageable pageable) {
+    public Page<Characterrr> getAllCharacters(Pageable pageable) {
         return characterRepository.findAll(pageable);
     }
 
@@ -44,8 +44,8 @@ public class CharacterService {
     }
 
 
-    public Characterrr getCharacterByName(String name) { // не використовується
-        return characterRepository.findCharacterrrByName(name);
+    public Page getCharacterByName(String name, Pageable pageable) {
+        return characterRepository.findCharacterrrByName(name, pageable);
     }
 
 
@@ -56,9 +56,6 @@ public class CharacterService {
      * @return the entity
      */
     public Characterrr getCharacterrrById(Integer id) {
-
-//            log.debug("Request to GetById Character : {}");  тут падає ексепгин при тесті якшо розкомітити
-
         return characterRepository.findById(id).get();
     }
 
@@ -78,9 +75,14 @@ public class CharacterService {
      *
      * @param id the id of the entity
      */
-    public void deleteCharacterrr(Integer id) {
+    public void deleteCharacterrr(Integer id) throws NoSuchCharacterException {
         log.debug("Request to delete Character : {}", id);
-        characterRepository.deleteById(id);
+        try {
+            characterRepository.deleteById(id);
+        } catch (Exception e) {
+            throw new NoSuchCharacterException(String.format("No such Character was found by id: %s", id), e);
+        }
+
     }
 
 

@@ -1,6 +1,7 @@
 package com.got2.task.controller.characterUnitTest;
 
 import com.got2.task.TaskApplication;
+import com.got2.task.controller.testData.TestData;
 import com.got2.task.entity.Characterrr;
 import com.got2.task.exceptions.NoSuchCharacterException;
 import com.got2.task.network.NetworkDataSourceImpl;
@@ -12,6 +13,7 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.stereotype.Component;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +21,7 @@ import java.util.*;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -26,8 +29,11 @@ import static org.mockito.Mockito.when;
 @RunWith(SpringRunner.class)
 
 @SpringBootTest(classes = TaskApplication.class)
+@Component
 public class CharacterTest {
 
+    @InjectMocks
+    TestData testData;
 
     private CharacterRepository characterRepository = mock(CharacterRepository.class);
     @InjectMocks
@@ -37,15 +43,14 @@ public class CharacterTest {
     private Characterrr characterrr;
     private Characterrr characterrr1;
     private Characterrr characterrr2;
+
     Set<Characterrr> characterrrSet = new HashSet<>();
 
-
-    private static final String METHOD = "getIdFromResource";
 
     public void init() {
         characterrr = new Characterrr();
         characterrr.setName("Oleg");
-        characterrr.setMother("mather");
+        characterrr.setMother("mother");
         characterrr.setBorn("ok");
         characterrr.setId(1);
         List<String> characterrrBooks = new ArrayList<>();
@@ -90,7 +95,7 @@ public class CharacterTest {
     public void saveTest() {
         characterService.save(characterrr);
         assertNotNull(characterrr.getId());
-        assertEquals(characterrr.getMother(), "mather");
+        assertEquals(characterrr.getMother(), "mother");
         assertEquals(characterrr.getBorn(), "ok");
 
     }
@@ -110,21 +115,9 @@ public class CharacterTest {
         assertEquals(result.size(), 2);
     }
 
-    /*@Test
-    @Transactional
-    public void givenName_whenFindByPersonName_thenReturnCharacterByName() {
-        Characterrr characterrr = TestData.generateCharacter(1);
-        assert characterrr != null;
-        String generateCharacterName = characterrr.getName();
-        Characterrr fromDB = characterRepository.getOne(1);
-        String CharacterFromDB = fromDB.getName();
-
-        assertEquals(generateCharacterName, CharacterFromDB);
-    }*/
-
     @Test
     @Transactional
-    public void getCharacterrrByIdTest() {
+    public void getCharacterrrByNameTest() {
         when(characterRepository.findById(1)).thenReturn(Optional.of(characterrr));
         when(characterService.getCharacterrrById(1)).thenCallRealMethod();
         Characterrr result = characterService.getCharacterrrById(1);
@@ -138,8 +131,17 @@ public class CharacterTest {
         when(characterRepository.findById(179)).thenThrow(new Exception());
         when(characterService.getCharacterFriendsFromSameBook(179)).thenCallRealMethod();  // Real implementation
         characterService.getCharacterFriendsFromSameBook(179);
+    }
 
 
+    @Test
+    public void givenTestCharacter_whenFindByName_thenReturnSameName() {
+
+        Characterrr testCharacter = testData.generateCharacter(1);
+        characterRepository.save(testCharacter);
+
+        assertEquals(testCharacter.getName(), "Aemon Blackfyre");
+        characterRepository.deleteAll();
     }
 
 

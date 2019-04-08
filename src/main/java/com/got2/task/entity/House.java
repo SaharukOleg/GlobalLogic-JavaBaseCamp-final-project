@@ -201,6 +201,57 @@ public class House {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof House)) return false;
+
+        House house = (House) o;
+
+        if (getId() != null ? !getId().equals(house.getId()) : house.getId() != null) return false;
+        if (getUrl() != null ? !getUrl().equals(house.getUrl()) : house.getUrl() != null) return false;
+        if (getName() != null ? !getName().equals(house.getName()) : house.getName() != null) return false;
+        if (getRegion() != null ? !getRegion().equals(house.getRegion()) : house.getRegion() != null) return false;
+        if (getCoatOfArms() != null ? !getCoatOfArms().equals(house.getCoatOfArms()) : house.getCoatOfArms() != null)
+            return false;
+        if (getWords() != null ? !getWords().equals(house.getWords()) : house.getWords() != null) return false;
+        if (getTitles() != null ? !getTitles().equals(house.getTitles()) : house.getTitles() != null) return false;
+        if (getSeats() != null ? !getSeats().equals(house.getSeats()) : house.getSeats() != null) return false;
+        if (getCurrentLord() != null ? !getCurrentLord().equals(house.getCurrentLord()) : house.getCurrentLord() != null)
+            return false;
+        if (getHeir() != null ? !getHeir().equals(house.getHeir()) : house.getHeir() != null) return false;
+        if (getOverlord() != null ? !getOverlord().equals(house.getOverlord()) : house.getOverlord() != null)
+            return false;
+        if (getFounded() != null ? !getFounded().equals(house.getFounded()) : house.getFounded() != null) return false;
+        if (getDiedOut() != null ? !getDiedOut().equals(house.getDiedOut()) : house.getDiedOut() != null) return false;
+        if (getAncestralWeapons() != null ? !getAncestralWeapons().equals(house.getAncestralWeapons()) : house.getAncestralWeapons() != null)
+            return false;
+        if (getCadetBranches() != null ? !getCadetBranches().equals(house.getCadetBranches()) : house.getCadetBranches() != null)
+            return false;
+        return getSwornMembers() != null ? getSwornMembers().equals(house.getSwornMembers()) : house.getSwornMembers() == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getId() != null ? getId().hashCode() : 0;
+        result = 31 * result + (getUrl() != null ? getUrl().hashCode() : 0);
+        result = 31 * result + (getName() != null ? getName().hashCode() : 0);
+        result = 31 * result + (getRegion() != null ? getRegion().hashCode() : 0);
+        result = 31 * result + (getCoatOfArms() != null ? getCoatOfArms().hashCode() : 0);
+        result = 31 * result + (getWords() != null ? getWords().hashCode() : 0);
+        result = 31 * result + (getTitles() != null ? getTitles().hashCode() : 0);
+        result = 31 * result + (getSeats() != null ? getSeats().hashCode() : 0);
+        result = 31 * result + (getCurrentLord() != null ? getCurrentLord().hashCode() : 0);
+        result = 31 * result + (getHeir() != null ? getHeir().hashCode() : 0);
+        result = 31 * result + (getOverlord() != null ? getOverlord().hashCode() : 0);
+        result = 31 * result + (getFounded() != null ? getFounded().hashCode() : 0);
+        result = 31 * result + (getDiedOut() != null ? getDiedOut().hashCode() : 0);
+        result = 31 * result + (getAncestralWeapons() != null ? getAncestralWeapons().hashCode() : 0);
+        result = 31 * result + (getCadetBranches() != null ? getCadetBranches().hashCode() : 0);
+        result = 31 * result + (getSwornMembers() != null ? getSwornMembers().hashCode() : 0);
+        return result;
+    }
+
+    @Override
     public String toString() {
         return "House{" +
                 "id=" + id +

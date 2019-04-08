@@ -1,6 +1,5 @@
 package com.got2.task.controller;
 
-
 import com.got2.task.entity.Characterrr;
 import com.got2.task.exceptions.NoSuchCharacterException;
 import com.got2.task.repository.CharacterRepository;
@@ -9,7 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
@@ -37,6 +35,8 @@ public class CharacterController {
     @Autowired
     CharacterRepository characterRepository;
 
+
+
     /**
      * GET /characters - Get all characters
      *
@@ -44,7 +44,7 @@ public class CharacterController {
      */
     @GetMapping("/characters") // if after url use ?page=0&size=2 ,  you can see first two characters
     public Page<Characterrr> getAllCharacter(Pageable pageable) {
-        return characterService.getAllCharacter(pageable);
+        return characterService.getAllCharacters(pageable);
     }
 
 
@@ -70,6 +70,7 @@ public class CharacterController {
      *
      * @return the ResponseEntity with status 200 (OK) and with body , or with status 404 (Not Found)
      */
+
     @PostMapping(value = "/outside/{outerId}", produces = APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity<Characterrr> importCharacterrrByOuterId(@PathVariable Integer outerId) {
@@ -82,7 +83,12 @@ public class CharacterController {
     @DeleteMapping(value = "/delete/{id}")
     public ResponseEntity deleteCharacter(@PathVariable Integer id) {
 
-        characterService.deleteCharacterrr(id);
+        try {
+            characterService.deleteCharacterrr(id);
+            log.info("success delete id + " + id);
+        } catch (NoSuchCharacterException e) {
+            e.printStackTrace();
+        }
         return new ResponseEntity(HttpStatus.OK);
     }
 
@@ -100,20 +106,11 @@ public class CharacterController {
     }
 
 
-    @GetMapping(value = "/character/name", produces = APPLICATION_JSON_VALUE) // перевірити
-    public Characterrr getCharacterByName(@PathVariable String name) {
+    @GetMapping(value = "/character", produces = APPLICATION_JSON_VALUE)
+    public Page getCharacterByName(@RequestParam("name") String name, Pageable pageable) {
         log.info("Fetching character with name of " + name);
-        return characterService.getCharacterByName(name);
+        return characterService.getCharacterByName(name, pageable);
     }
-
-
-//    @GetMapping(value = "/character/{id}", produces = APPLICATION_JSON_VALUE)
-//    public Page<Characterrr> getCharacterrrById(Integer id, Pageable pageable) {
-//
-//        log.debug("Request to GetById Character : {}", id);
-//
-//        return characterService.getCharacterrrById(id, pageable);
-//    }
 
 
     /**

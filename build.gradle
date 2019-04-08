@@ -46,6 +46,11 @@ dependencies {
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'mysql:mysql-connector-java'
 
+    // https://mvnrepository.com/artifact/com.google.guava/guava
+    compile group: 'com.google.guava', name: 'guava', version: '11.0.2'
+
+
+
 // https://mvnrepository.com/artifact/org.powermock/powermock-api-mockito
     //testCompile group: 'org.powermock', name: 'powermock-api-mockito', version: '1.7.4'
 

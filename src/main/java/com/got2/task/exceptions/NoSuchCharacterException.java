@@ -1,4 +1,5 @@
 package com.got2.task.exceptions;
+
 public class NoSuchCharacterException extends Exception {
     public NoSuchCharacterException() {
         super();

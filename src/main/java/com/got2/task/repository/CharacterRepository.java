@@ -12,13 +12,12 @@ import java.util.List;
 
 @Repository
 public interface CharacterRepository extends JpaRepository<Characterrr, Integer> {
-    Characterrr findCharacterrrByName(@Param("name") String name);
+    Page findCharacterrrByName(@Param("name") String name, Pageable pageable);
 //
 //    Page<Characterrr> findById(@Param("id") Integer id, Pageable pageable);
 
     List<Characterrr> findAllOrderByName(Pageable pageable);
 
     Page<Characterrr> findAll(Pageable pageable);
-
 
 }

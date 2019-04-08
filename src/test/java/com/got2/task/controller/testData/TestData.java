@@ -1,11 +1,18 @@
 package com.got2.task.controller.testData;
 
+import com.got2.task.TaskApplication;
 import com.got2.task.entity.Characterrr;
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.stereotype.Component;
+import org.springframework.test.context.junit4.SpringRunner;
 
+@RunWith(SpringRunner.class)
+@Component
 public class TestData {
 
 
-    public static Characterrr generateCharacter(Integer character) {
+    public Characterrr generateCharacter(Integer character) {
         switch (character) {
             case 1:
                 Characterrr character1 = new Characterrr();
